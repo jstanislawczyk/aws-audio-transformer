@@ -66,3 +66,5 @@ data "archive_file" "audio_upload_consumer" {
   source_dir  = "${path.module}/../backend/lambdas/audio-upload-consumer/dist"
   output_path = "artifacts/audio-upload-consumer.zip"
 }
+
+uploaded_prefix = "uploaded"

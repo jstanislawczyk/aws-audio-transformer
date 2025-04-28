@@ -20,6 +20,6 @@ resource "aws_s3_bucket_notification" "upload_notification" {
   lambda_function {
     lambda_function_arn = aws_lambda_function.audio_upload_consumer.arn
     events              = ["s3:ObjectCreated:*"]
-    filter_prefix       = "uploaded/"
+    filter_prefix       = "${local.uploaded_prefix}/"
   }
 }

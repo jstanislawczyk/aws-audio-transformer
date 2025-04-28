@@ -46,7 +46,7 @@ resource "aws_iam_policy" "list_files_policy" {
       "Action": [
         "dynamodb:Scan"
       ],
-      "Resource": "${aws_dynamodb_table.audio.arn}"
+      "Resource": "${aws_dynamodb_table.audio_metadata.arn}"
     }
   ]
 }
