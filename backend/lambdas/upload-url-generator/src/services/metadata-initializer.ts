@@ -5,7 +5,7 @@ import {AudioMetadata} from '@audio-transformer/schemas';
 export const createAudioMetadataRecord = async (audioMetadata: AudioMetadata): Promise<void> => {
   const documentClient = initDocumentClient();
   const putCommand = new PutCommand({
-    TableName: process.env.AUDIO_JOB_TABLE_NAME,
+    TableName: process.env.AUDIO_TABLE_NAME,
     Item: audioMetadata,
   });
 

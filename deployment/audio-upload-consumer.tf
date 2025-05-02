@@ -9,8 +9,9 @@ resource "aws_lambda_function" "audio_upload_consumer" {
 
   environment {
     variables = {
-      REGION        = local.region
-      SQS_QUEUE_URL = aws_sqs_queue.audio-events.id
+      REGION           = local.region
+      SQS_QUEUE_URL    = aws_sqs_queue.audio-events.id
+      AUDIO_TABLE_NAME = aws_dynamodb_table.audio_metadata.name
     }
   }
 }
@@ -47,6 +48,13 @@ resource "aws_iam_policy" "audio_upload_consumer_policy" {
         "sqs:SendMessage"
       ],
       "Resource": "${aws_sqs_queue.audio-events.arn}"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:UpdateItem"
+      ],
+      "Resource": "${aws_dynamodb_table.audio_metadata.arn}"
     }
   ]
 }
@@ -66,5 +74,3 @@ data "archive_file" "audio_upload_consumer" {
   source_dir  = "${path.module}/../backend/lambdas/audio-upload-consumer/dist"
   output_path = "artifacts/audio-upload-consumer.zip"
 }
-
-uploaded_prefix = "uploaded"
