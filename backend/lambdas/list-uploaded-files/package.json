@@ -1,7 +1,7 @@
 {
-  "name": "audio-upload-consumer",
+  "name": "list-uploaded-files",
   "version": "1.0.0",
-  "description": "Lambda that consumes S3 events, updates audio status and sends messages to SQS for deduplication",
+  "description": "Lambda that returns a list of uploaded files",
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.609.0",
-    "@aws-sdk/lib-dynamodb": "^3.609.0",
-    "@aws-sdk/client-sqs": "^3.609.0"
+    "@aws-sdk/lib-dynamodb": "^3.609.0"
   }
 }

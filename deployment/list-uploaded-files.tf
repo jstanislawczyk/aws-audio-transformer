@@ -10,7 +10,7 @@ resource "aws_lambda_function" "list_files" {
   environment {
     variables = {
       REGION           = local.region
-      AUDIO_TABLE_NAME = aws_dynamodb_table.audio.name
+      AUDIO_TABLE_NAME = aws_dynamodb_table.audio_metadata.name
     }
   }
 }
