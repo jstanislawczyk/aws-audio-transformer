@@ -1,4 +1,4 @@
-import {getRegion} from './envs';
+import {getRegion} from '../envs';
 import {DynamoDBClient} from '@aws-sdk/client-dynamodb';
 
 let ddbClient: DynamoDBClient;

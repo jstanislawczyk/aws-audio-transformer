@@ -13,13 +13,13 @@ export const handler = async (event: S3Event): Promise<void> => {
 
     const results = await Promise.allSettled(promises);
 
-    results.forEach((result, index) => {
+    for (const result of results) {
         if (result.status === 'rejected') {
-            console.error(`Error processing record ${index}:`, result.reason);
+            console.error('Error processing record:', result.reason);
         } else {
-            console.log(`Successfully processed record ${index}`);
+            console.log('Successfully processed record:', result.value);
         }
-    });
+    }
 }
 
 const handleNewAudioEvent = async (record: S3EventRecord) => {

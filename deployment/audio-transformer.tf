@@ -21,6 +21,12 @@ resource "aws_lambda_function" "audio_transformer" {
   }
 }
 
+resource "aws_lambda_event_source_mapping" "audio_events" {
+  event_source_arn = aws_sqs_queue.audio_events.arn
+  function_name    = aws_lambda_function.audio_transformer.arn
+  batch_size       = 1
+}
+
 resource "aws_iam_role" "audio_transformer" {
   name               = "${local.project}-audio-transformer"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
@@ -56,6 +62,15 @@ resource "aws_iam_policy" "audio_transformer_policy" {
       "Resource": [
         "${aws_s3_bucket.audio.arn}/*"
       ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "sqs:ReceiveMessage",
+        "sqs:DeleteMessage",
+        "sqs:GetQueueAttributes"
+      ],
+      "Resource": "${aws_sqs_queue.audio_events.arn}"
     }
   ]
 }
