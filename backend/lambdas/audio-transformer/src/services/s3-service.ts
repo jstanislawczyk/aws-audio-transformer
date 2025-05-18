@@ -28,7 +28,7 @@ export const fetchS3File = async (s3Object: S3Object): Promise<Readable> => {
   return data.Body as Readable;
 }
 
-export const uploadFileToS3 = async (mergedFilePath: string, newFileEvent: NewFileEvent): Promise<void> => {
+export const uploadFileToS3 = async (mergedFilePath: string, newFileEvent: NewFileEvent): Promise<S3Object> => {
   const s3Client = initS3Client();
   const { bucketName, key } = newFileEvent.source;
   const dir = path.dirname(key);
@@ -47,5 +47,10 @@ export const uploadFileToS3 = async (mergedFilePath: string, newFileEvent: NewFi
   } catch (err) {
     console.log('Error: ', err);
     throw new Error(`Failed to upload file to S3. Bucket: ${bucketName}, Key: ${targetKey}`);
+  }
+
+  return {
+    bucketName,
+    key: targetKey,
   }
 }

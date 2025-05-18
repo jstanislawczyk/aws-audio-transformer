@@ -3,6 +3,7 @@ import {S3Object} from './s3';
 export interface AudioMetadata {
   id: string;
   uploadedObject: S3Object;
+  transformedObject?: S3Object;
   fileName: string;
   status: FileStatus;
   createdAt: number;
