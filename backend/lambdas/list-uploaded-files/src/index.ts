@@ -12,6 +12,9 @@ export const handler = async (): Promise<APIGatewayProxyResult> => {
         return {
             statusCode: 500,
             body: JSON.stringify({ message: 'Internal Server Error' }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
         };
     }
 
@@ -20,8 +23,12 @@ export const handler = async (): Promise<APIGatewayProxyResult> => {
     return {
         statusCode: 200,
         body: JSON.stringify(dtos),
+        headers: {
+            'Content-Type': 'application/json',
+        },
     }
 }
+
 const mapToDtos = (items: AudioMetadata[]): AudioMetadataDto[] => {
     return items.map((item) => ({
         id: item.id,

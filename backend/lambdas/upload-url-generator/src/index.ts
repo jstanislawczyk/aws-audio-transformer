@@ -8,10 +8,12 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     const eventBody = event.body;
 
     if (!eventBody) {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({ message: 'Event body is required' }),
-        };
+        return buildResponse(
+            400,
+            {
+                message: 'Event body is required',
+            }
+        );
     }
 
     const newFileDto = JSON.parse(eventBody) as NewFileDto;
@@ -20,14 +22,21 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     const preSignedUrl = await generatePreSignedUrl(audioMetadata);
     await createAudioMetadataRecord(audioMetadata);
 
-    return {
-        statusCode: 200,
-        body: JSON.stringify({
+    return buildResponse(
+        200,
+        {
             url: preSignedUrl,
-        }),
+        }
+    );
+}
+
+const buildResponse = (statusCode: number, body: any): APIGatewayProxyResult => {
+    return {
+        statusCode,
+        body: JSON.stringify(body),
         headers: {
             'Content-Type': 'application/json',
         }
-    }
+    };
 }
 

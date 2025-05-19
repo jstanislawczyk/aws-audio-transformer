@@ -16,7 +16,6 @@ export const fetchAudioFile = async (event: NewFileEvent, tempDirPath: string): 
   return localAudioFilePath;
 }
 
-
 export const fetchS3File = async (s3Object: S3Object): Promise<Readable> => {
   const s3Client = initS3Client();
   const {bucketName, key} = s3Object;
