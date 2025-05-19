@@ -1,4 +1,5 @@
 import {AudioMetadata, NewFileDto} from '@audio-transformer/schemas';
+import path from 'path';
 
 export const buildAudioMetadata = (newFileDto: NewFileDto): AudioMetadata => {
   const bucketName = process.env.BUCKET_NAME || "";
@@ -20,8 +21,9 @@ export const buildAudioMetadata = (newFileDto: NewFileDto): AudioMetadata => {
 const buildKey = (id: string, newFileDto: NewFileDto): string => {
   const uploadedPrefix = process.env.UPLOADED_PREFIX || "";
   const datePrefix = getDatePrefix();
+  const fileExtension = path.parse(newFileDto.fileName).ext;
 
-  return `${uploadedPrefix}/${datePrefix}/${id}/${newFileDto.fileName}`;
+  return `${uploadedPrefix}/${datePrefix}/${id}${fileExtension}`;
 }
 
 const getDatePrefix = (): string => {
@@ -30,5 +32,9 @@ const getDatePrefix = (): string => {
   const month = date.getUTCMonth() + 1;
   const year = date.getUTCFullYear();
 
-  return `${year}/${month}/${day}`;
+  return `${year}/${zeroPad(month)}/${zeroPad(day)}`;
 }
+
+const zeroPad = (value: number) => {
+  return value.toString().padStart(2, "0")
+};

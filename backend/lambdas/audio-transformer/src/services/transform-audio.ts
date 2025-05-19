@@ -1,12 +1,14 @@
 import ffmpeg from 'fluent-ffmpeg';
 
 export const transformAudio = async (audioFilePath: string, tempDirPath: string): Promise<string> => {
-  const transformedAudioPath = `${tempDirPath}/transformed.mp3`;
+  const bitrate = "44100";
+  const format = "mp3";
+  const transformedAudioPath = `${tempDirPath}/transformed.${format}`;
 
-  return new Promise((resolve, reject) => {
+  await new Promise((resolve, reject) => {
     ffmpeg(audioFilePath)
-      .toFormat('mp3')
-      .audioBitrate('44100')
+      .toFormat(format)
+      .audioBitrate(bitrate)
       .save(transformedAudioPath)
       .on('end', () => {
         console.log('File has been transformed successfully');
@@ -17,4 +19,6 @@ export const transformAudio = async (audioFilePath: string, tempDirPath: string)
         return reject(error);
       });
   });
+
+  return transformedAudioPath;
 }

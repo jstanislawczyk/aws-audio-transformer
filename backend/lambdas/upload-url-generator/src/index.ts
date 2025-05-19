@@ -25,6 +25,9 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         body: JSON.stringify({
             url: preSignedUrl,
         }),
+        headers: {
+            'Content-Type': 'application/json',
+        }
     }
 }
 
