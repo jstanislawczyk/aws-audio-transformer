@@ -1,0 +1,26 @@
+{
+  "name": "upload-url-generator",
+  "version": "1.0.0",
+  "description": "Lambda that generates pre-signed url to upload audio files",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node ./build.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@audio-transformer/schemas": "^0.0.0",
+    "@types/aws-lambda": "^8.10.140",
+    "esbuild": "^0.23.0",
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "@audio-transformer/utils": "^0.0.0",
+    "@aws-sdk/client-dynamodb": "^3.609.0",
+    "@aws-sdk/client-s3": "^3.609.0",
+    "@aws-sdk/lib-dynamodb": "^3.609.0",
+    "@aws-sdk/s3-request-presigner": "^3.609.0"
+  }
+}

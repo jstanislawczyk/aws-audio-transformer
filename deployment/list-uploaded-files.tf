@@ -10,7 +10,7 @@ resource "aws_lambda_function" "list_files" {
   environment {
     variables = {
       REGION           = local.region
-      AUDIO_TABLE_NAME = aws_dynamodb_table.audio.name
+      AUDIO_TABLE_NAME = aws_dynamodb_table.audio_metadata.name
     }
   }
 }
@@ -46,7 +46,7 @@ resource "aws_iam_policy" "list_files_policy" {
       "Action": [
         "dynamodb:Scan"
       ],
-      "Resource": "${aws_dynamodb_table.audio.arn}"
+      "Resource": "${aws_dynamodb_table.audio_metadata.arn}"
     }
   ]
 }

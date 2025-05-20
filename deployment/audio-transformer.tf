@@ -16,9 +16,16 @@ resource "aws_lambda_function" "audio_transformer" {
       IS_LAMBDA         = true
       FFMPEG_PATH       = "/opt/ffmpeg"
       FFPROBE_PATH      = "/opt/ffprobe"
+      AUDIO_TABLE_NAME  = aws_dynamodb_table.audio_metadata.name
       AUDIO_BUCKET_NAME = aws_s3_bucket.audio.bucket
     }
   }
+}
+
+resource "aws_lambda_event_source_mapping" "audio_events" {
+  event_source_arn = aws_sqs_queue.audio_events.arn
+  function_name    = aws_lambda_function.audio_transformer.arn
+  batch_size       = 1
 }
 
 resource "aws_iam_role" "audio_transformer" {
@@ -56,6 +63,22 @@ resource "aws_iam_policy" "audio_transformer_policy" {
       "Resource": [
         "${aws_s3_bucket.audio.arn}/*"
       ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "sqs:ReceiveMessage",
+        "sqs:DeleteMessage",
+        "sqs:GetQueueAttributes"
+      ],
+      "Resource": "${aws_sqs_queue.audio_events.arn}"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:UpdateItem"
+      ],
+      "Resource": "${aws_dynamodb_table.audio_metadata.arn}"
     }
   ]
 }

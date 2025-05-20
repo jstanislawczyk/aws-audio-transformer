@@ -9,8 +9,10 @@ resource "aws_lambda_function" "upload_url_generator" {
 
   environment {
     variables = {
-      REGION      = local.region
-      BUCKET_NAME = aws_s3_bucket.audio.bucket
+      REGION           = local.region
+      UPLOADED_PREFIX  = local.uploaded_prefix
+      BUCKET_NAME      = aws_s3_bucket.audio.bucket
+      AUDIO_TABLE_NAME = aws_dynamodb_table.audio_metadata.name
     }
   }
 }
@@ -47,6 +49,13 @@ resource "aws_iam_policy" "upload_url_generator_policy" {
         "s3:PutObject"
       ],
       "Resource": "${aws_s3_bucket.audio.arn}/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:PutItem"
+      ],
+      "Resource": "${aws_dynamodb_table.audio_metadata.arn}"
     }
   ]
 }
@@ -66,4 +75,8 @@ data "archive_file" "upload_url_generator" {
   type        = "zip"
   source_dir  = "${path.module}/../backend/lambdas/upload-url-generator/dist"
   output_path = "artifacts/upload-url-generator.zip"
+}
+
+locals {
+  uploaded_prefix = "uploaded"
 }

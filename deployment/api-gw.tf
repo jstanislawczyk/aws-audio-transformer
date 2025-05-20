@@ -39,7 +39,7 @@ resource "aws_apigatewayv2_integration" "list_files_integration" {
 
 resource "aws_apigatewayv2_route" "upload_url_generator_route" {
   api_id             = aws_apigatewayv2_api.api.id
-  route_key          = "POST ${local.api_prefix}/upload"
+  route_key          = "POST ${local.api_prefix}/files"
   target             = "integrations/${aws_apigatewayv2_integration.upload_url_generator_integration.id}"
   authorization_type = "NONE"
 }
