@@ -1,6 +1,7 @@
 import {APIGatewayProxyResult} from 'aws-lambda';
 import {getAudioFiles} from './services/get-audio-files';
-import {AudioMetadata, AudioMetadataDto} from '@audio-processor/schemas';
+import {AudioMetadata, AudioMetadataDto} from '@audio-transformer/schemas';
+import {buildResponse} from '@audio-transformer/utils';
 
 export const handler = async (): Promise<APIGatewayProxyResult> => {
     let audioFiles: AudioMetadata[];
@@ -9,24 +10,12 @@ export const handler = async (): Promise<APIGatewayProxyResult> => {
         audioFiles = await getAudioFiles();
     } catch (error) {
         console.error('Error fetching audio files:', error);
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ message: 'Internal Server Error' }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        };
+        return buildResponse(500, { message: 'Internal Server Error' });
     }
 
     const dtos = mapToDtos(audioFiles)
 
-    return {
-        statusCode: 200,
-        body: JSON.stringify(dtos),
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    }
+    return buildResponse(200, { items: dtos });
 }
 
 const mapToDtos = (items: AudioMetadata[]): AudioMetadataDto[] => {

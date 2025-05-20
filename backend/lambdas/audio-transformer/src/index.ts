@@ -1,4 +1,4 @@
-import {NewFileEvent} from '@audio-processor/schemas';
+import {NewFileEvent} from '@audio-transformer/schemas';
 import {initTempDir, removeTempDir} from './services/temp-dir';
 import {processAudio} from './services/audio-processor';
 import {SQSEvent, SQSRecord} from 'aws-lambda';

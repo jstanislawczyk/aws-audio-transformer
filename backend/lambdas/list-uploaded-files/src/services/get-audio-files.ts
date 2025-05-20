@@ -1,6 +1,6 @@
 import {paginateScan} from '@aws-sdk/lib-dynamodb';
 import {initDocumentClient} from '../clients/document-client';
-import {AudioMetadata} from '@audio-processor/schemas';
+import {AudioMetadata} from '@audio-transformer/schemas';
 
 export const getAudioFiles = async (): Promise<AudioMetadata[]> => {
   const documentClient = initDocumentClient();

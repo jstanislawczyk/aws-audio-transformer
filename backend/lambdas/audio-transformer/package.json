@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@audio-processor/schemas": "*",
+    "@audio-transformer/schemas": "*",
     "@types/aws-lambda": "^8.10.140",
     "esbuild": "^0.23.0",
     "fluent-ffmpeg": "^2.1.3",

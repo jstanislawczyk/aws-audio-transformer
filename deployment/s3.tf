@@ -22,4 +22,6 @@ resource "aws_s3_bucket_notification" "upload_notification" {
     events              = ["s3:ObjectCreated:*"]
     filter_prefix       = "${local.uploaded_prefix}/"
   }
+
+  depends_on = [aws_lambda_permission.allow_upload_bucket]
 }

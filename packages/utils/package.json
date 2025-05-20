@@ -1,0 +1,10 @@
+{
+  "name": "@audio-transformer/utils",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.140",
+    "typescript": "^5.3.3"
+  }
+}

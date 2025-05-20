@@ -1,7 +1,7 @@
 import {initS3Client} from '../clients/s3-client';
 import {GetObjectCommand, GetObjectCommandOutput, PutObjectCommand} from '@aws-sdk/client-s3';
 import fs from 'fs/promises';
-import {S3Object, NewFileEvent} from '@audio-processor/schemas';
+import {S3Object, NewFileEvent} from '@audio-transformer/schemas';
 import {Readable} from 'stream';
 import path from 'path';
 
