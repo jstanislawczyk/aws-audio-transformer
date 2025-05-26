@@ -2,7 +2,11 @@ import {NewFileEvent} from '@audio-transformer/schemas';
 import {initTempDir, removeTempDir} from './services/temp-dir';
 import {processAudio} from './services/audio-processor';
 import {SQSEvent, SQSRecord} from 'aws-lambda';
-import {setAudioFileStatusAsFailed, setAudioFileStatusAsProcessed} from './services/file-status-handler';
+import {
+    setAudioFileStatusAsFailed,
+    setAudioFileStatusAsFinished,
+    setAudioFileStatusAsProcessing
+} from './services/file-status-handler';
 
 export const handler = async (event: SQSEvent): Promise<void> => {
     const records = event.Records;
@@ -22,8 +26,9 @@ const processRecord = async (tempDirPath: string, record: SQSRecord): Promise<vo
     const newFileEvent: NewFileEvent = JSON.parse(record.body);
 
     try {
+        await setAudioFileStatusAsProcessing(newFileEvent.id);
         const audioS3Object = await processAudio(newFileEvent, tempDirPath);
-        await setAudioFileStatusAsProcessed(newFileEvent.id, audioS3Object);
+        await setAudioFileStatusAsFinished(newFileEvent.id, audioS3Object);
     } catch (error) {
         console.error('Error processing record:', error);
         await setAudioFileStatusAsFailed(newFileEvent.id);
