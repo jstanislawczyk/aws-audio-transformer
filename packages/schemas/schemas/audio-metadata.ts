@@ -16,4 +16,4 @@ export interface AudioMetadataDto {
   createdAt: number;
 }
 
-export type FileStatus = 'INITIALIZED' | 'UPLOADED' | 'PROCESSED' | 'FAILED';
+export type FileStatus = 'INITIALIZED' | 'UPLOADED' | 'PROCESSING' | 'FINISHED' | 'FAILED';
