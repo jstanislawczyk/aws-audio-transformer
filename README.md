@@ -20,3 +20,5 @@ The Lambda function processes the audio file and stores the processed file back 
    - `POST /files`: Creates new presigned URL for uploading an audio file to S3 bucket.
    - `GET /files`: Returns a list of audio files in the S3 bucket.
 
+## Architecture
+![Full](https://github.com/user-attachments/assets/88b7dbcb-c4e3-4dbe-95ff-05809e1df717)
